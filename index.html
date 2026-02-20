@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatPDF AI - Chat with your documents</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+            background: #0A0A0A;
+            color: #FFFFFF;
+            min-height: 100vh;
+        }
+        a { color: #007AFF; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* Nav */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 24px 24px;
+        }
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .logo span { color: #007AFF; }
+        .nav-links { display: flex; gap: 28px; }
+        .nav-links a {
+            color: #8E8E93;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: #fff; text-decoration: none; }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            max-width: 720px;
+            margin: 80px auto 60px;
+            padding: 0 24px;
+        }
+        .hero-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(0,122,255,0.12);
+            border: 1px solid rgba(0,122,255,0.2);
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #007AFF;
+            margin-bottom: 24px;
+        }
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            margin-bottom: 20px;
+        }
+        .hero h1 .gradient {
+            background: linear-gradient(135deg, #007AFF, #5856D6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: 18px;
+            color: #8E8E93;
+            line-height: 1.6;
+            max-width: 520px;
+            margin: 0 auto 36px;
+        }
+        .app-store-btn {
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+        .app-store-btn:hover { transform: scale(1.05); }
+        .app-store-btn img { height: 54px; }
+
+        /* Features */
+        .features {
+            max-width: 1080px;
+            margin: 80px auto;
+            padding: 0 24px;
+        }
+        .features-title {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 48px;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+        .feature-card {
+            background: #1C1C1E;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 28px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0,122,255,0.3);
+        }
+        .feature-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+        .feature-card h3 {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .feature-card p {
+            font-size: 14px;
+            color: #8E8E93;
+            line-height: 1.5;
+        }
+
+        /* Formats */
+        .formats {
+            max-width: 600px;
+            margin: 0 auto 80px;
+            text-align: center;
+            padding: 0 24px;
+        }
+        .formats h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+        .format-pills {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .format-pill {
+            padding: 10px 24px;
+            border-radius: 24px;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .pill-pdf { background: rgba(255,69,58,0.12); color: #FF453A; }
+        .pill-docx { background: rgba(45,127,249,0.12); color: #2D7FF9; }
+        .pill-txt { background: rgba(142,142,147,0.12); color: #8E8E93; }
+        .pill-epub { background: rgba(48,209,88,0.12); color: #30D158; }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid rgba(255,255,255,0.06);
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 32px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .footer-copy {
+            font-size: 13px;
+            color: #8E8E93;
+        }
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+        .footer-links a {
+            font-size: 13px;
+            color: #8E8E93;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover { color: #fff; text-decoration: none; }
+
+        @media (max-width: 640px) {
+            .hero h1 { font-size: 36px; }
+            .hero p { font-size: 16px; }
+            .features-title { font-size: 28px; }
+            nav { padding: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">Chat<span>PDF</span> AI</div>
+    <div class="nav-links">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="hero-badge">Powered by AI</div>
+    <h1>Your documents,<br><span class="gradient">reimagined.</span></h1>
+    <p>Upload any document and instantly chat, summarize, create flashcards, and generate quizzes with AI.</p>
+    <!-- Replace with actual App Store link when available -->
+    <!--<a href="#" class="app-store-btn">
+        <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
+    </a>-->
+</section>
+
+<section class="features">
+    <h2 class="features-title">Everything you need to study smarter</h2>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon" style="background:rgba(0,122,255,0.12);">💬</div>
+            <h3>AI Chat</h3>
+            <p>Ask anything about your document and get accurate, context-aware answers instantly.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:rgba(175,82,222,0.12);">📝</div>
+            <h3>Smart Summaries</h3>
+            <p>Generate concise AI-powered summaries that capture every key point of your document.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:rgba(255,159,10,0.12);">🗂️</div>
+            <h3>Flashcards</h3>
+            <p>Auto-generated flashcards with spaced repetition to help you memorize and retain information.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:rgba(48,209,88,0.12);">✅</div>
+            <h3>Quizzes</h3>
+            <p>Test your knowledge with AI-generated multiple-choice quizzes and track your progress.</p>
+        </div>
+    </div>
+</section>
+
+<section class="formats">
+    <h2>Supported formats</h2>
+    <div class="format-pills">
+        <span class="format-pill pill-pdf">PDF</span>
+        <span class="format-pill pill-docx">DOCX</span>
+        <span class="format-pill pill-txt">TXT</span>
+        <span class="format-pill pill-epub">EPUB</span>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-copy">&copy; 2026 ChatPDF AI. All rights reserved.</div>
+    <div class="footer-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Use</a>
+    </div>
+</footer>
+
+</body>
+</html>
